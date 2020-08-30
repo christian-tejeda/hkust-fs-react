@@ -42,6 +42,15 @@ export default class MainComponent extends Component {
             );
         }
 
+        const DishWithId = ({ match }) => {
+            return (
+                <DishdetailComponent
+                    dish={this.state.dishes.filter((dish) => dish.id === parseInt(match.params.dishId, 10))[0]}
+                    comments={this.state.comments.filter((comment) => comment.dishId === parseInt(match.params.dishId, 10))}
+                />
+            );
+        }
+
         return (
             <div>
                 {/* <Navbar dark color="primary">
@@ -58,6 +67,7 @@ export default class MainComponent extends Component {
                             () => <Menu dishes={this.state.dishes} />
                         }
                     />
+                    <Route path='/menu/:dishId' component={DishWithId} />
                     <Route exact path="/contactus" component={ContactComponent}/>
                     <Redirect to="/home"/>
                 </Switch>
