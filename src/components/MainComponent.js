@@ -6,7 +6,11 @@ import DishdetailComponent from './DishdetailComponent';
 import HeaderComponent from './HeaderComponent';
 import FooterComponent from './FooterComponent';
 import HomeComponent from './HomeComponent';
+import ContactComponent from './ContactComponent';
 import { DISHES } from '../shared/dishes';
+import { COMMENTS } from '../shared/comments';
+import { PROMOTIONS } from '../shared/promotions';
+import { LEADERS } from '../shared/leaders';
 
 export default class MainComponent extends Component {
 
@@ -14,7 +18,9 @@ export default class MainComponent extends Component {
         super(props);
         this.state = {
             dishes: DISHES,
-            selectedDish: null
+            comments: COMMENTS,
+            promotions: PROMOTIONS,
+            leaders: LEADERS
         };
     }
 
@@ -28,7 +34,11 @@ export default class MainComponent extends Component {
 
         const HomePage = () => {
             return (
-                <HomeComponent />
+                <HomeComponent
+                    dish={this.state.dishes.filter((dish) => dish.featured)[0]}
+                    promotion={this.state.promotions.filter((promo) => promo.featured)[0]}
+                    leader={this.state.leaders.filter((leader) => leader.featured)[0]}
+                />
             );
         }
 
@@ -48,6 +58,7 @@ export default class MainComponent extends Component {
                             () => <Menu dishes={this.state.dishes} />
                         }
                     />
+                    <Route exact path="/contactus" component={ContactComponent}/>
                     <Redirect to="/home"/>
                 </Switch>
 
