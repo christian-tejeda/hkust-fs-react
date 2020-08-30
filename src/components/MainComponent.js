@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 // import { Navbar, NavbarBrand } from 'reactstrap';
-import Menu from './MenuComponent';
+import MenuComponent from './MenuComponent';
 import DishdetailComponent from './DishdetailComponent';
 import HeaderComponent from './HeaderComponent';
 import FooterComponent from './FooterComponent';
 import HomeComponent from './HomeComponent';
+import AboutComponent from './AboutComponent';
 import ContactComponent from './ContactComponent';
 import { DISHES } from '../shared/dishes';
 import { COMMENTS } from '../shared/comments';
@@ -62,9 +63,14 @@ export default class MainComponent extends Component {
                 <HeaderComponent />
                 <Switch>
                     <Route path="/home" component={HomePage} />
+                    <Route path="/aboutus"
+                        component={
+                            () => <AboutComponent leaders={this.state.leaders} />
+                        }
+                        />
                     <Route exact path="/menu"
                         component={
-                            () => <Menu dishes={this.state.dishes} />
+                            () => <MenuComponent dishes={this.state.dishes} />
                         }
                     />
                     <Route path='/menu/:dishId' component={DishWithId} />

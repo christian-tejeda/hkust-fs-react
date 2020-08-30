@@ -11,7 +11,6 @@ import { Link } from 'react-router-dom';
             const display = comments.map((elem) => {
                 return (
                     <div>
-                        <h4>Comments</h4>
                         <li key={elem.id}>
                             {elem.comment}
                             <br/>
@@ -23,6 +22,7 @@ import { Link } from 'react-router-dom';
             return (
                 <div>
                     <ul className="list-unstyled">
+                        <h4>Comments</h4>
                         {display}
                     </ul>
                 </div>
