@@ -16,7 +16,7 @@ export default class DishdetailComponent extends Component {
                     <li key={elem.id}>
                         {elem.comment}
                         <br/>
-                        -- {elem.author}, {elem.date}
+                        -- {elem.author}, {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(elem.date)))}
                     </li>
                 )
             })
@@ -39,21 +39,24 @@ export default class DishdetailComponent extends Component {
             );
         } else {
             return (
-                <div className="row">
-                    <div  className="col-12 col-md-5 m-1">
-                        <Card>
-                            <CardImg top src={this.props.dish.image} alt={this.props.dish.name} />
-                            <CardBody>
-                                <CardTitle>{this.props.dish.name}</CardTitle>
-                                <CardText>{this.props.dish.description}</CardText>
-                            </CardBody>
-                        </Card>
-                    </div>
-                    <div className="col-12 col-md-5 m-1 d-inline-block">
-                        <h4>Comments</h4>
-                        {this.renderComments(this.props.dish.comments)}
+                <div className="container">
+                    <div className="row">
+                        <div  className="col-12 col-md-5 m-1">
+                            <Card>
+                                <CardImg top src={this.props.dish.image} alt={this.props.dish.name} />
+                                <CardBody>
+                                    <CardTitle>{this.props.dish.name}</CardTitle>
+                                    <CardText>{this.props.dish.description}</CardText>
+                                </CardBody>
+                            </Card>
+                        </div>
+                        <div className="col-12 col-md-5 m-1">
+                            <h4>Comments</h4>
+                            {this.renderComments(this.props.dish.comments)}
+                        </div>
                     </div>
                 </div>
+
             )
         }
     }
