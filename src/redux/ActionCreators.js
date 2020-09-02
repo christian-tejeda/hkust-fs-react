@@ -1,5 +1,4 @@
 import * as ActionTypes from './ActionTypes';
-// import { DISHES } from '../shared/dishes';
 import { baseUrl } from '../shared/baseUrl';
 
 export const addComment = (comment) => ({
@@ -141,3 +140,74 @@ export const addPromos = (promos) => ({
     type: ActionTypes.ADD_PROMOS,
     payload: promos
 });
+
+export const leadersFailed = (errmess) => ({
+    type: ActionTypes.LEADERS_FAILED,
+    payload: errmess
+});
+
+export const leadersLoading = () => ({
+    type: ActionTypes.LEADERS_LOADING
+})
+
+export const addLeaders = (leaders) => ({
+    type: ActionTypes.ADD_LEADERS,
+    payload: leaders
+});
+
+export const fetchLeaders = () => (dispatch) => {
+    return fetch(baseUrl + 'leaders')
+        .then(response => {
+            if (response.ok) {
+                return response;
+            } else {
+                let error = new Error('Error ' + response.status + ': ' + response.statusText)
+                error.response = response;
+                throw error;
+            }
+        }, error => {
+            let errMess = new Error(error.message);
+            throw errMess;
+        })
+        .then(response => response.json())
+        .then(leaders => dispatch(addLeaders(leaders)))
+        .catch(error => dispatch(leadersFailed(error.message)));
+}
+
+// export const addFeedback = (feedback) => ({
+//     type: ActionTypes.ADD_FEEDBACK,
+//     payload: feedback
+// })
+
+// export const feedbackFailed = (errmess) => ({
+//     type: ActionTypes.FEEDBACK_FAILED,
+//     payload: errmess
+// })
+
+export const postFeedback = (feedback) => () => {
+    
+    const newFeedback = { ...feedback };
+
+    return fetch(baseUrl + 'feedback', {
+        method: 'POST',
+        body: JSON.stringify(newFeedback),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'same-origin'
+    })
+        .then(response => {
+            if (response.ok) {
+                return response;
+            } else {
+                let error = new Error('Error ' + response.status + ': ' + response.statusText)
+                error.response = response;
+                throw error;
+            }
+        }, error => {
+            let errMess = new Error(error.message);
+            throw errMess;
+        })
+        .then(response => response.json())
+        .then(response => alert('Thanks for your feedback!\n' + JSON.stringify(response)));
+}
